@@ -7,7 +7,6 @@ function check_backups_qty () {
   #   true - there are more backups than allowed
   #   false - there are less backups than allowed
   backed_up_qty=$(find /tmp/backups/ -name "*$arch_name*" | wc -l);
-  echo $backed_up_qty
   [[ "$backed_up_qty" -gt "$max_backup_qty" ]] && return
 }
 
@@ -42,8 +41,8 @@ if [ ! -d "$backup_path" ]; then
   mkdir "/tmp/backups"
 fi
 
-# Get current date in epoch format (seconds since 01-01-1970)
-DATE=`date +%s`
+# Get current date in format like 2018-03-01-12-04-05
+DATE=`date +"%Y-%m-%d-%H-%M-%S"`
 
 # Make arch_name as /some/path/ => some-path
 # To replace slashes to dashes: tr "/" "-"
@@ -51,12 +50,8 @@ DATE=`date +%s`
 # To trim the trailing dash (if any): sed 's/-$//'
 arch_name=$(echo $target_folder | tr "/" "-" | sed 's/^-//' | sed 's/-$//')
 
-# Copy target folder to /tmp/backups
-cp -r "$target_folder" "$backup_path"/"$arch_name"
-
-# Make a .tar.gz archive and remove temporary folder
-tar -cvzf /tmp/backups/"$arch_name"_"$DATE".tar.gz "$backup_path"/"$arch_name"
-rm -rf "$backup_path"/"$arch_name"
+# Make a .tar.gz archive
+tar -cvzf /tmp/backups/"$arch_name"_"$DATE".tar.gz -C "$target_folder" .
 
 # Check if there are more backups than allowed
 while check_backups_qty; do

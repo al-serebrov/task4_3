@@ -17,7 +17,7 @@ if [ "$#" -ne 2 ]; then
 fi
 
 # Assign variables
-target_folder="$1"  #'/home/administrator/web/logs'
+target_folder="$1"
 max_backup_qty="$2"
 
 # Check if target folder exists
@@ -33,7 +33,6 @@ if [[ ! $max_backup_qty =~ ^[0-9]+$ ]]; then
   exit 1
 fi
 
-# backup_path="{target_folder}${1##*/}"
 backup_path="/tmp/backups"
 
 # Create folder for backups if it doesn't exist

@@ -11,7 +11,7 @@ git clone https://github.com/al-serebrov/task4_3
 $ bash task4_3.sh /path/to/taget_folder number_of_backups
 ```
 The first command line argument is path to target folder (of which backups would be made)
-The sesond command line argument is for allowed number of backups.
+The seсond command line argument is for allowed number of backups.
 For example:
 
 ```
